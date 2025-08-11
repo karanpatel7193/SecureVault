@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SecureVault.Views.LoginPage"
+             Title="LoginPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+
+            <Label Text="SecureVault" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <Entry x:Name="usernameEntry"
+                   Placeholder="Username"
+                   Keyboard="Default"
+                   ReturnType="Next" />
+
+            <Entry x:Name="passwordEntry"
+                   Placeholder="Password"
+                   IsPassword="True"
+                   ReturnType="Go" />
+
+            <Button Text="Login"
+                    Clicked="OnLoginClicked"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Padding="10"/>
+
+            <Label Text="Don't have an account?" HorizontalOptions="Center" />
+
+            <Button Text="Register"
+                    Clicked="OnRegisterClicked"
+                    BackgroundColor="LightGray"
+                    TextColor="Black"
+                    CornerRadius="10"
+                    Padding="10" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

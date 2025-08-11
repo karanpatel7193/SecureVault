@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SecureVault.Controls.Sidebar"
+             x:Name="SidebarRoot">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Grid.Row="0">
+            <Grid Padding="6, 7">
+                <ImageButton Source="hamburger_icon.png"
+                             MaximumHeightRequest="5"
+                             VerticalOptions="Start"
+                             HorizontalOptions="Start"
+                             Padding="2"
+                             BackgroundColor="#adb5bd"
+                             Clicked="OnHamburgerClicked" />
+            </Grid>
+
+            <CollectionView x:Name="MenuItems"
+                            SelectionMode="Single"
+                            SelectionChanged="OnSelectionChanged"
+                            Margin="6"
+                            ItemsSource="{Binding ItemsSource, Source={x:Reference SidebarRoot}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5"
+                               BorderColor="Transparent"
+                               BackgroundColor="Transparent"
+                               HasShadow="False">
+                            <Grid ColumnDefinitions="Auto,*" VerticalOptions="Center">
+                                <Image Source="{Binding Icon}"
+                                       Margin="5, 6"
+                                       HeightRequest="24"
+                                       WidthRequest="24" />
+                                <Label Text="{Binding Title}"
+                                       Grid.Column="1"
+                                       FontSize="18"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray500}}"
+                                       IsVisible="{Binding Source={x:Reference SidebarRoot}, Path=BindingContext.IsSidebarExpanded}" />
+                                <Button Text="🗑"
+                                        Grid.Column="2"
+                                        FontSize="14"
+                                        BackgroundColor="Transparent"
+                                        TextColor="Red"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"
+                                        Command="{Binding Source={x:Reference SidebarRoot}, Path=DeleteMenuItemCommand}"
+                                        CommandParameter="{Binding .}"
+                                        IsVisible="{Binding Source={x:Reference SidebarRoot}, Path=BindingContext.IsSidebarExpanded}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Grid Padding="6, 7">
+                <ImageButton Source="add_icon.png"
+                             MaximumHeightRequest="14"
+                             VerticalOptions="Start"
+                             HorizontalOptions="Start"
+                             Padding="10"
+                             BackgroundColor="#adb5bd"
+                             Clicked="OnAddMenuClicked" />
+            </Grid>
+        </VerticalStackLayout>
+
+        <BoxView Grid.Row="1" />
+
+        <Grid Grid.Row="2" Padding="6, 12">
+            <Button Text="Logout"
+                    BackgroundColor="DarkRed"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Clicked="OnLogoutClicked"
+                    FontAttributes="Bold"
+                    HorizontalOptions="FillAndExpand"/>
+        </Grid>
+    </Grid>
+</ContentView>

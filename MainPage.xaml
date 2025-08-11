@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:SecureVault.Models"
+             xmlns:controls="clr-namespace:SecureVault.Controls"
+             x:Class="SecureVault.MainPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Sidebar -->
+        <Grid x:Name="Sidebar"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray100}}"
+              WidthRequest="250"
+              VerticalOptions="Fill">
+            
+            <!-- Sidebar UserControl -->
+            <controls:Sidebar x:Name="SidebarControl"
+                              Grid.Column="0"
+                              ItemsSource="{Binding MenuItemsList}"
+                              SelectionChanged="MenuItems_SelectionChanged"
+                              HamburgerClicked="HamburgerButton_Clicked"/>
+        </Grid>
+
+        <!-- Content Area -->
+        <ContentView x:Name="ContentArea"
+                     Grid.Column="1"
+                     BackgroundColor="{AppThemeBinding Light=#fafafa, Dark=#2d2d2d}">
+            
+        </ContentView>
+
+    </Grid>
+
+</ContentPage>

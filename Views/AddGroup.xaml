@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SecureVault.Views.AddGroup"
+             Title="Add New Group"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}">
+
+    <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
+
+        <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1e1e1e}"
+               CornerRadius="15"
+               HasShadow="True"
+               Padding="25"
+               WidthRequest="700"
+               HorizontalOptions="Center">
+
+            <VerticalStackLayout Spacing="20">
+
+                <Label Text="Create New Group"
+                       FontAttributes="Bold"
+                       FontSize="22"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                <Label Text="Enter Menu Title:"
+                       FontSize="16"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                <Entry x:Name="TitleEntry"
+                       Placeholder="Menu title"
+                       FontSize="14"
+                       BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2c2c2c}"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       HeightRequest="45"/>
+
+                <Button Text="Add"
+                        Clicked="OnAddClicked"
+                        BackgroundColor="#0078D4"
+                        TextColor="White"
+                        CornerRadius="10"
+                        HeightRequest="45" />
+
+                <Button Text="Cancel"
+                        Clicked="OnCancelClicked"
+                        BackgroundColor="{AppThemeBinding Light=#D3D3D3, Dark=#444444}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        CornerRadius="10"
+                        HeightRequest="45" />
+
+            </VerticalStackLayout>
+        </Frame>
+
+    </VerticalStackLayout>
+</ContentPage>
