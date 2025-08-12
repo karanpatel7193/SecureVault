@@ -28,8 +28,6 @@ SecureVault is a cross-platform password management application built with .NET 
 - Android: `dotnet build -f net8.0-android`
 - iOS: `dotnet build -f net8.0-ios`
 - Windows: `dotnet build -f net8.0-windows10.0.19041.0`
-- MacCatalyst: `dotnet build -f net8.0-maccatalyst`
-- Tizen: (optional, see [Tizen.NET](https://github.com/Samsung/Tizen.NET))
 
 ### Dependencies
 
