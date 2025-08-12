@@ -84,6 +84,11 @@ public partial class PasswordList : ContentPage
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
+        ToggleSidebarForm();
+    }
+
+    private async void ToggleSidebarForm()
+    {
         if (PasswordFormControl.IsVisible)
         {
             await PasswordFormControl.FadeTo(0, 150, Easing.CubicIn);
@@ -119,19 +124,13 @@ public partial class PasswordList : ContentPage
 
     private async void PasswordFormControl_FormClosed(object sender, EventArgs e)
     {
-        await HidePasswordFormAsync();
+        ToggleSidebarForm();
     }
 
     private async void PasswordFormControl_OnPasswordSaved(object sender, PasswordItem e)
     {
         await LoadPasswords();
-        await HidePasswordFormAsync();
-    }
-
-    private async Task HidePasswordFormAsync()
-    {
-        MainGrid.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Absolute);
-        ToggleFormButton.Text = "Add";
+        ToggleSidebarForm();
     }
 
     private async Task LoadPasswords()

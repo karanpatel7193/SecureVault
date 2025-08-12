@@ -20,11 +20,6 @@ public partial class PasswordForm : ContentView
             await DatabaseService.InitAsync();
             await DatabaseService.SavePasswordItemAsync(item);
 
-            await this.FadeTo(0, 150, Easing.CubicIn);
-            await this.TranslateTo(50, 0, 150, Easing.CubicIn);
-
-            this.IsVisible = false;
-
             OnPasswordSaved?.Invoke(this, item);
             BindingContext = new PasswordItem();
 
@@ -35,10 +30,6 @@ public partial class PasswordForm : ContentView
 
     private async void OnCloseClicked(object sender, EventArgs e)
     {
-        await this.FadeTo(0, 150, Easing.CubicIn);
-        await this.TranslateTo(50, 0, 150, Easing.CubicIn);
-
-        this.IsVisible = false;
         BindingContext = new PasswordItem();
 
         FormClosed?.Invoke(this, EventArgs.Empty);
