@@ -2,41 +2,72 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SecureVault.Views.RegisterPage"
-             Title="RegisterPage">
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+            >
 
-            <Label Text="Create Account" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" />
+    <Grid>
+        <Image x:Name="backgroundImage"
+               Source="background.jpg" 
+               Aspect="AspectFill"
+               Opacity="0.3"
+               IsVisible="True"
+               Grid.RowSpan="2" />
 
-            <Entry x:Name="usernameEntry"
-                   Placeholder="Username"
-                   Keyboard="Default"
-                   ReturnType="Next" />
+        <ScrollView>
+            <Grid>
+                <VerticalStackLayout Spacing="20"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     WidthRequest="300"
+                                     Padding="0">
 
-            <Entry x:Name="passwordEntry"
-                   Placeholder="Password"
-                   IsPassword="True"
-                   ReturnType="Next" />
+                    <Label x:Name="titleLabel"
+                           Text="Create Account"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
 
-            <Entry x:Name="confirmPasswordEntry"
-                   Placeholder="Confirm Password"
-                   IsPassword="True"
-                   ReturnType="Go" />
+                    <Entry x:Name="usernameEntry"
+                           Placeholder="Username"
+                           Keyboard="Default"
+                           ReturnType="Next"
+                           BackgroundColor="White" 
+                           TextColor="Black"
+                           />
 
-            <Button Text="Register"
-                    Clicked="OnRegisterClicked"
-                    BackgroundColor="#4CAF50"
-                    TextColor="White"
-                    CornerRadius="10"
-                    Padding="10"/>
+                    <Entry x:Name="passwordEntry"
+                           Placeholder="Password"
+                           IsPassword="True"
+                           ReturnType="Next"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           />
 
-            <Button Text="Back to Login"
-                    Clicked="OnBackToLoginClicked"
-                    BackgroundColor="LightGray"
-                    TextColor="Black"
-                    CornerRadius="10"
-                    Padding="10" />
+                    <Entry x:Name="confirmPasswordEntry"
+                           Placeholder="Confirm Password"
+                           IsPassword="True"
+                           ReturnType="Go"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                    <Button x:Name="registerButton"
+                            Text="Register"
+                            Clicked="OnRegisterClicked"
+                            BackgroundColor="#0078D4"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Padding="10" />
+
+                    <Button x:Name="backToLoginButton"
+                            Text="Back to Login"
+                            Clicked="OnBackToLoginClicked"
+                            BackgroundColor="LightGray"
+                            TextColor="Black"
+                            CornerRadius="10"
+                            Padding="10" />
+
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </Grid>
 </ContentPage>

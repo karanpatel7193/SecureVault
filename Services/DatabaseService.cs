@@ -20,66 +20,133 @@ namespace SecureVault.Services
             await _database.CreateTableAsync<User>();
             _initialized = true;
         }
+
         public static int GetCurrentUserId()
         {
             return Preferences.Get("user_id", 0);
         }
 
-        public static Task<int> RegisterUserAsync(User user)
-            => _database.InsertAsync(user);
-
-        public static Task<User?> GetUserByCredentialsAsync(string username, string password)
-            => _database.Table<User>()
-                .Where(u => u.UserName == username && u.Password == password)
-                .FirstOrDefaultAsync();
-
-        public static Task<bool> UsernameExistsAsync(string username)
-            => _database.Table<User>()
-                .Where(u => u.UserName == username)
-                .FirstOrDefaultAsync()
-                .ContinueWith(task => task.Result != null);
-
-        public static Task<List<MenuItemModel>> GetMenuItemsAsync()
+        public static async Task<int> RegisterUserAsync(User user)
         {
+            try
+            {
+                if (await UsernameExistsAsync(user.UserName))
+                {
+                    throw new Exception("Username already exists.");
+                }
+                return await _database.InsertAsync(user);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        
+        public static async Task<User?> GetUserByCredentialsAsync(string username, string password)
+        {
+            try
+            {
+               return await _database.Table<User>()
+                    .Where(u => u.UserName == username && u.Password == password)
+                    .FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static async Task<bool> UsernameExistsAsync(string username)
+        {
+            try
+            {
+                return await _database.Table<User>().Where(u => u.UserName == username).FirstOrDefaultAsync().ContinueWith(task => task.Result != null);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static async Task<List<MenuItemModel>> GetMenuItemsAsync()
+        {
+            try
+            {
             var userId = GetCurrentUserId();
-            return _database.Table<MenuItemModel>()
+            return await _database.Table<MenuItemModel>()
                             .Where(m => m.UserId == userId)
                             .ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public static Task<int> SaveMenuItemAsync(MenuItemModel item)
+        public static async Task<int> SaveMenuItemAsync(MenuItemModel item)
         {
-            item.UserId = GetCurrentUserId();
-            return item.Id != 0 ? _database.UpdateAsync(item) : _database.InsertAsync(item);
+            try
+            {
+                item.UserId = GetCurrentUserId();
+                return item.Id != 0 ? await _database.UpdateAsync(item) : await _database.InsertAsync(item);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public static Task<int> DeleteMenuItemAsync(MenuItemModel item)
-            => _database.DeleteAsync(item);
-
-        public static Task<int> SavePasswordItemAsync(PasswordItem item)
+        public static async Task<int> DeleteMenuItemAsync(MenuItemModel item)
         {
-            item.UserId = GetCurrentUserId();
-            return item.Id != 0 ? _database.UpdateAsync(item) : _database.InsertAsync(item);
+            try
+            {
+                return await _database.DeleteAsync(item);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public static Task<List<PasswordItem>> GetAllPasswordItemsAsync()
+        public static async Task<int> SavePasswordItemAsync(PasswordItem item)
         {
-            var userId = GetCurrentUserId();
-            return _database.Table<PasswordItem>()
-                            .Where(p => p.UserId == userId)
-                            .ToListAsync();
+            try
+            {
+                item.UserId = GetCurrentUserId();
+                return item.Id != 0 ? await _database.UpdateAsync(item) : await _database.InsertAsync(item);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public static async Task<Dictionary<string, List<PasswordItem>>> GetGroupedPasswordItemsAsync()
+        public static async Task<List<PasswordItem>> GetAllPasswordItemsAsync()
         {
-            var allItems = await GetAllPasswordItemsAsync();
-            return allItems
-                .GroupBy(item => item.GroupTitle ?? "Ungrouped")
-                .ToDictionary(g => g.Key, g => g.ToList());
+            try
+            {
+                var userId = GetCurrentUserId();
+                return await _database.Table<PasswordItem>()
+                                .Where(p => p.UserId == userId)
+                                .ToListAsync();
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public static Task<int> DeletePasswordItemAsync(PasswordItem item)
-            => _database.DeleteAsync(item);
+        public static async Task<int> DeletePasswordItemAsync(PasswordItem item)
+        {
+            try
+            {
+                return await _database.DeleteAsync(item);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         public static void CloseConnection()
         {

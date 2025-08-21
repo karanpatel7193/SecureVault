@@ -3,6 +3,8 @@ using Microsoft.Maui.Controls;
 using SecureVault.Views;
 using SecureVault.Services;
 using System.Collections.ObjectModel;
+using SecureVault.Popups;
+using SecureVault.Controls;
 
 namespace SecureVault
 {
@@ -29,6 +31,15 @@ namespace SecureVault
             BindingContext = this;
             InitializeAsync();
             MessagingCenter.Subscribe<AddGroup>(this, "MenuItemAdded", async (sender) =>
+            {
+                await LoadMenusAsync();
+            });
+            MessagingCenter.Subscribe<Sidebar, string>(this, "GroupDeleted", async (sender, deletedGroupTitle) =>
+            {
+                await LoadMenusAsync();
+            });
+
+            MessagingCenter.Subscribe<PasswordList>(this, "CurrentGroupDeleted", async (sender) =>
             {
                 await LoadMenusAsync();
             });

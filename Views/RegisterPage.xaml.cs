@@ -52,4 +52,66 @@ public partial class RegisterPage : ContentPage
     {
         await Navigation.PopAsync();
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        titleLabel.Opacity = 0;
+        usernameEntry.Opacity = 0;
+        passwordEntry.Opacity = 0;
+        confirmPasswordEntry.Opacity = 0;
+        registerButton.Opacity = 0;
+        backToLoginButton.Opacity = 0;
+
+        titleLabel.TranslationY = -40;
+        usernameEntry.TranslationX = -100;
+        passwordEntry.TranslationX = 100;
+        confirmPasswordEntry.TranslationX = -100;
+        registerButton.TranslationY = 40;
+        backToLoginButton.TranslationY = 40;
+
+        await titleLabel.TranslateTo(0, 0, 600, Easing.CubicOut);
+        await titleLabel.FadeTo(1, 400);
+
+        await Task.WhenAll(
+            usernameEntry.TranslateTo(0, 0, 400, Easing.CubicOut),
+            usernameEntry.FadeTo(1, 400)
+        );
+
+        await Task.WhenAll(
+            passwordEntry.TranslateTo(0, 0, 400, Easing.CubicOut),
+            passwordEntry.FadeTo(1, 400)
+        );
+
+        await Task.WhenAll(
+            confirmPasswordEntry.TranslateTo(0, 0, 400, Easing.CubicOut),
+            confirmPasswordEntry.FadeTo(1, 400)
+        );
+
+        await Task.WhenAll(
+            registerButton.TranslateTo(0, 0, 400, Easing.CubicOut),
+            registerButton.FadeTo(1, 400)
+        );
+
+        await Task.WhenAll(
+            backToLoginButton.TranslateTo(0, 0, 400, Easing.CubicOut),
+            backToLoginButton.FadeTo(1, 400)
+        );
+        AnimateBackground();
+    }
+    private async void AnimateBackground()
+    {
+        while (true)
+        {
+            await backgroundImage.ScaleTo(1.1, 10000, Easing.SinInOut);
+
+            await Task.Delay(500);
+
+            await backgroundImage.ScaleTo(1.0, 10000, Easing.SinInOut);
+
+            await Task.Delay(500);
+        }
+    }
+
 }

@@ -15,13 +15,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Sidebar -->
         <Grid x:Name="Sidebar"
               BackgroundColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray100}}"
               WidthRequest="250"
               VerticalOptions="Fill">
             
-            <!-- Sidebar UserControl -->
             <controls:Sidebar x:Name="SidebarControl"
                               Grid.Column="0"
                               ItemsSource="{Binding MenuItemsList}"
@@ -29,7 +27,6 @@
                               HamburgerClicked="HamburgerButton_Clicked"/>
         </Grid>
 
-        <!-- Content Area -->
         <ContentView x:Name="ContentArea"
                      Grid.Column="1"
                      BackgroundColor="{AppThemeBinding Light=#fafafa, Dark=#2d2d2d}">

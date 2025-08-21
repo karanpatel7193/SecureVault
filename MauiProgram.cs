@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 
 namespace SecureVault
 {
@@ -9,10 +10,13 @@ namespace SecureVault
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont(filename: "MaterialIcons-Regular.ttf", alias: "MaterialIconsRegular");
+                    fonts.AddFont(filename: "MaterialIconsSharp-Regular.otf", alias: "MaterialIconsSharpRegular");
                 });
 
 #if DEBUG

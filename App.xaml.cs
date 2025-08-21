@@ -9,15 +9,12 @@ namespace SecureVault
         {
             InitializeComponent();
             InitApp();
-            if (Preferences.ContainsKey("user_id"))
-            {
-                MainPage = new AppShell();
-            }
-            else
-            {
-                MainPage = new NavigationPage(new LoginPage());
-            }
-            //MainPage = new AppShell();
+
+            Preferences.Remove("user_id");
+            Preferences.Remove("username");
+
+            MainPage = new NavigationPage(new LoginPage());
+
             AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
         }
 
@@ -30,8 +27,7 @@ namespace SecureVault
         {
             Console.WriteLine("App is closing. Releasing resources...");
 
-            // Close DB or release anything held in memory
-            DatabaseService.CloseConnection(); // Make sure this method exists
+            DatabaseService.CloseConnection();
         }
     }
 }

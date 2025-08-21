@@ -1,38 +1,66 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SecureVault.Views.LoginPage"
-             Title="LoginPage">
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+             x:Class="SecureVault.Views.LoginPage">
 
-            <Label Text="SecureVault" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+    <Grid>
+        <Image x:Name="backgroundImage"
+               Source="background.jpg" 
+               Aspect="AspectFill"
+               Opacity="0.3"
+               IsVisible="True"
+               Grid.RowSpan="2" />
 
-            <Entry x:Name="usernameEntry"
-                   Placeholder="Username"
-                   Keyboard="Default"
-                   ReturnType="Next" />
+        <ScrollView>
+            <Grid>
+                <VerticalStackLayout Spacing="20"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     WidthRequest="300">
 
-            <Entry x:Name="passwordEntry"
-                   Placeholder="Password"
-                   IsPassword="True"
-                   ReturnType="Go" />
+                    <Label x:Name="titleLabel"
+                           Text="SecureVault"
+                           FontSize="32"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
 
-            <Button Text="Login"
-                    Clicked="OnLoginClicked"
-                    BackgroundColor="#2196F3"
-                    TextColor="White"
-                    CornerRadius="10"
-                    Padding="10"/>
+                    <Entry x:Name="usernameEntry"
+                           Placeholder="Username"
+                           Keyboard="Default"
+                           ReturnType="Next"
+                           BackgroundColor="White" 
+                           TextColor="Black"
+                           />
 
-            <Label Text="Don't have an account?" HorizontalOptions="Center" />
+                    <Entry x:Name="passwordEntry"                       
+                           Placeholder="Password"
+                           IsPassword="True"
+                           ReturnType="Go"
+                           BackgroundColor="White" 
+                           TextColor="Black"
+                           />
+    
 
-            <Button Text="Register"
-                    Clicked="OnRegisterClicked"
-                    BackgroundColor="LightGray"
-                    TextColor="Black"
-                    CornerRadius="10"
-                    Padding="10" />
-        </VerticalStackLayout>
-    </ScrollView>
+                    <Button x:Name="loginButton"
+                            Text="Login"
+                            Clicked="OnLoginClicked"
+                            BackgroundColor="#2196F3"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Padding="10" />
+
+
+                    <Label Text="Don't have an account?"
+                           HorizontalOptions="Center" />
+
+                    <Button Text="Register"
+                            Clicked="OnRegisterClicked"
+                            BackgroundColor="LightGray"
+                            TextColor="Black"
+                            CornerRadius="10"
+                            Padding="10" />
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </Grid>
 </ContentPage>

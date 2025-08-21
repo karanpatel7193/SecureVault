@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SecureVault.Views.AddGroup"
-             Title="Add New Group"
-             BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}">
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="SecureVault.Popups.AddGroup"
+    >
 
-    <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
-
-        <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1e1e1e}"
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Frame x:Name="PopupFrame"
+               BackgroundColor="{AppThemeBinding Light=White, Dark=#1e1e1e}"
                CornerRadius="15"
                HasShadow="True"
                Padding="25"
@@ -32,23 +33,42 @@
                        BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2c2c2c}"
                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
                        HeightRequest="45"/>
+                <Label Text="Select Icon:"
+                    FontSize="16"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                <Grid  ColumnDefinitions="*, Auto">
+                    <Picker x:Name="IconPicker"
+                            ItemDisplayBinding="{Binding Name}"
+                            BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2c2c2c}"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                            HeightRequest="40" Grid.Column="0" />
 
-                <Button Text="Add"
-                        Clicked="OnAddClicked"
-                        BackgroundColor="#0078D4"
-                        TextColor="White"
-                        CornerRadius="10"
-                        HeightRequest="45" />
+                    <Label x:Name="IconPreviewLabel"
+                           FontFamily="MaterialIconsRegular"
+                           FontSize="30"
+                           VerticalOptions="Center"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" Grid.Column="1" />
+                </Grid>
 
-                <Button Text="Cancel"
-                        Clicked="OnCancelClicked"
-                        BackgroundColor="{AppThemeBinding Light=#D3D3D3, Dark=#444444}"
-                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                        CornerRadius="10"
-                        HeightRequest="45" />
+                <Grid ColumnDefinitions="*">
+                    <HorizontalStackLayout Grid.Column="0" Spacing="10" HorizontalOptions="Start">
+                        <Button Text="Add"
+                                Clicked="OnAddClicked"
+                                BackgroundColor="#0078D4"
+                                TextColor="White"
+                                CornerRadius="10"
+                                 WidthRequest="80" />
+
+                        <Button Text="Cancel"
+                                Clicked="OnCancelClicked"
+                                BackgroundColor="{AppThemeBinding Light=#D3D3D3, Dark=#444444}"
+                                TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                                CornerRadius="10"
+                                 WidthRequest="80" />
+                    </HorizontalStackLayout>
+                </Grid>
 
             </VerticalStackLayout>
         </Frame>
-
     </VerticalStackLayout>
-</ContentPage>
+</toolkit:Popup>

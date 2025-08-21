@@ -40,4 +40,54 @@ public partial class LoginPage : ContentPage
     {
         await Navigation.PushAsync(new RegisterPage());
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        titleLabel.Opacity = 0;
+        usernameEntry.Opacity = 0;
+        passwordEntry.Opacity = 0;
+        loginButton.Opacity = 0;
+
+        titleLabel.TranslationY = -40;
+        usernameEntry.TranslationX = -100;
+        passwordEntry.TranslationX = 100;
+        loginButton.TranslationY = 40;
+
+        await titleLabel.TranslateTo(0, 0, 600, Easing.CubicOut);
+        await titleLabel.FadeTo(1, 400);
+
+        await Task.WhenAll(
+            usernameEntry.TranslateTo(0, 0, 400, Easing.CubicOut),
+            usernameEntry.FadeTo(1, 400)
+        );
+
+        await Task.WhenAll(
+            passwordEntry.TranslateTo(0, 0, 400, Easing.CubicOut),
+            passwordEntry.FadeTo(1, 400)
+        );
+
+        await Task.WhenAll(
+            loginButton.TranslateTo(0, 0, 400, Easing.CubicOut),
+            loginButton.FadeTo(1, 400)
+        );
+
+        AnimateBackground();
+    }
+
+    private async void AnimateBackground()
+    {
+        while (true)
+        {
+            await backgroundImage.ScaleTo(1.1, 10000, Easing.SinInOut);
+
+            await Task.Delay(500);
+
+            await backgroundImage.ScaleTo(1.0, 10000, Easing.SinInOut);
+
+            await Task.Delay(500);
+        }
+    }
+
 }

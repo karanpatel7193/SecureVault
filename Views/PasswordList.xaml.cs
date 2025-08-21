@@ -1,4 +1,5 @@
 using SecureVault.Controls;
+using SecureVault.Helpers;
 using SecureVault.Models;
 using SecureVault.Services;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ namespace SecureVault.Views;
 public partial class PasswordList : ContentPage
 {
     private string _searchText;
+    private bool _isSidebarOpen = false;
     public ObservableCollection<PasswordItem> Passwords { get; set; } = new();
     private List<PasswordItem> _allPasswords = new();
     public ICommand DeleteCommand { get; }
@@ -42,10 +44,22 @@ public partial class PasswordList : ContentPage
             if (deletedGroupTitle == PageTitle.Text)
             {
                 await Application.Current.MainPage.DisplayAlert("Deleted", $"The group \"{deletedGroupTitle}\" was deleted.", "OK");
-                Passwords.Clear();
-                await Application.Current.MainPage.Navigation.PopAsync();
+
+                // Tell MainPage to reload
+                MessagingCenter.Send(this, "CurrentGroupDeleted");
+
+                // Optional: Clear this content to avoid showing outdated data
+                Content = new Label
+                {
+                    Text = "This group was deleted.",
+                    TextColor = Colors.Gray,
+                    FontSize = 18,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                };
             }
         });
+
         LoadPasswords();
     }
 
@@ -70,7 +84,8 @@ public partial class PasswordList : ContentPage
             PasswordFormControl.Opacity = 0;
             PasswordFormControl.TranslationX = 50;
             PasswordFormControl.IsVisible = true;
-            ToggleFormButton.Text = "Close";
+            AddCloseLabel.Text = MaterialDesignIconFonts.Close;
+            AddCloseLabel.TextColor = Colors.DarkRed;
 
             MainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
             MainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
@@ -90,15 +105,17 @@ public partial class PasswordList : ContentPage
     private async void ToggleSidebarForm()
     {
         if (PasswordFormControl.IsVisible)
-        {
+        {   _isSidebarOpen = false;
             await PasswordFormControl.FadeTo(0, 150, Easing.CubicIn);
             await PasswordFormControl.TranslateTo(50, 0, 150, Easing.CubicIn);
             PasswordFormControl.IsVisible = false;
             MainGrid.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Absolute);
-            ToggleFormButton.Text = "Add";
+            AddCloseLabel.Text = MaterialDesignIconFonts.Add;
+            AddCloseLabel.TextColor = Colors.Green;
         }
         else
         {
+            _isSidebarOpen = true;
             PasswordsCollection.SelectedItem = null;
 
             PasswordFormControl.BindingContext = new PasswordItem
@@ -118,7 +135,8 @@ public partial class PasswordList : ContentPage
                 PasswordFormControl.FadeTo(1, 200, Easing.CubicOut)
             );
 
-            ToggleFormButton.Text = "Close";
+            AddCloseLabel.Text = MaterialDesignIconFonts.Close;
+            AddCloseLabel.TextColor = Colors.DarkRed;
         }
     }
 
@@ -184,7 +202,6 @@ public partial class PasswordList : ContentPage
         if (string.IsNullOrEmpty(text))
             return false;
 
-        // Match if contains or exact word match
         var words = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         return text.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                words.Any(w => string.Equals(w, query, StringComparison.OrdinalIgnoreCase));

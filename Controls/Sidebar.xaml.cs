@@ -1,4 +1,7 @@
+using CommunityToolkit.Maui.Views;
+using SecureVault.Helpers;
 using SecureVault.Models;
+using SecureVault.Popups;
 using SecureVault.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -19,6 +22,20 @@ public partial class Sidebar : ContentView
 
         BindingContext = this;
     }
+    public static readonly BindableProperty IsSidebarExpandedProperty =
+    BindableProperty.Create(
+        nameof(IsSidebarExpanded),
+        typeof(bool),
+        typeof(Sidebar),
+        true,
+        BindingMode.TwoWay);
+
+    public bool IsSidebarExpanded
+    {
+        get => (bool)GetValue(IsSidebarExpandedProperty);
+        set => SetValue(IsSidebarExpandedProperty, value);
+    }
+
     public static readonly BindableProperty ItemsSourceProperty =
         BindableProperty.Create(nameof(ItemsSource), typeof(ObservableCollection<MenuItemModel>), typeof(Sidebar), defaultBindingMode: BindingMode.TwoWay);
 
@@ -39,12 +56,17 @@ public partial class Sidebar : ContentView
 
     private void OnHamburgerClicked(object sender, EventArgs e)
     {
+        IsSidebarExpanded = !IsSidebarExpanded;
+
+        HamburgerLabel.Text = IsSidebarExpanded
+            ? MaterialDesignIconFonts.Close
+            : MaterialDesignIconFonts.Storage;
         HamburgerClicked?.Invoke(this, e);
     }
     private async void OnAddMenuClicked(object sender, EventArgs e)
     {
-        var addGroup = new SecureVault.Views.AddGroup();
-        await Application.Current.MainPage.Navigation.PushModalAsync(addGroup);
+        var popup = new AddGroup();
+        await Application.Current.MainPage.ShowPopupAsync(popup);
     }
 
     private async Task DeleteMenuItemAsync(MenuItemModel item)
